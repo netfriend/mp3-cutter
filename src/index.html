@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' blob:; script-src 'self'; style-src 'self' 'unsafe-inline'; media-src 'self' blob:; connect-src 'self' blob:;" />
+  <title>MP3 Cutter</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="brand">
+        <span class="brand-icon">♪</span>
+        <h1>MP3 Cutter</h1>
+      </div>
+      <div class="header-actions">
+        <button id="btn-register-menu" class="btn btn-secondary" title="Tambahkan ke menu klik kanan Explorer">📌 Menu Explorer</button>
+        <button type="button" id="btn-open" class="btn btn-primary">Buka Audio</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <div id="empty-state" class="empty-state">
+        <div class="empty-icon">🎵</div>
+        <p>Belum ada file. Klik <strong>Buka MP3</strong> untuk memulai.</p>
+      </div>
+
+      <div id="editor" class="editor hidden">
+        <div class="file-info">
+          <span id="file-name" class="file-name">—</span>
+          <span id="file-duration" class="file-duration">00:00</span>
+        </div>
+
+        <div id="waveform" class="waveform"></div>
+
+        <div class="trim-info">
+          <div class="trim-block">
+            <label>Mulai</label>
+            <span id="trim-start">00:00.0</span>
+          </div>
+          <div class="trim-block trim-block--center">
+            <label>Durasi pilihan</label>
+            <span id="trim-duration" class="highlight">00:00.0</span>
+          </div>
+          <div class="trim-block">
+            <label>Selesai</label>
+            <span id="trim-end">00:00.0</span>
+          </div>
+        </div>
+
+        <div class="template-panel" id="template-panel">
+          <div class="template-header">
+            <label class="template-toggle">
+              <input type="checkbox" id="template-enabled" />
+              <span>Aktifkan input waktu</span>
+            </label>
+            <span class="template-badge" id="template-badge">Nonaktif</span>
+          </div>
+
+          <div class="template-body" id="template-body">
+            <div class="template-row">
+              <span class="template-label">Mulai</span>
+              <div class="time-inputs">
+                <input type="number" id="start-min" min="0" max="999" value="0" aria-label="Menit mulai" />
+                <span>menit</span>
+                <input type="number" id="start-sec" min="0" max="59" value="0" aria-label="Detik mulai" />
+                <span>detik</span>
+              </div>
+            </div>
+            <div class="template-row">
+              <span class="template-label">Selesai</span>
+              <div class="time-inputs">
+                <input type="number" id="end-min" min="0" max="999" value="1" aria-label="Menit selesai" />
+                <span>menit</span>
+                <input type="number" id="end-sec" min="0" max="59" value="0" aria-label="Detik selesai" />
+                <span>detik</span>
+              </div>
+            </div>
+            <button type="button" id="btn-apply-template" class="btn btn-secondary btn-apply-template">Apply</button>
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="playback">
+            <button id="btn-play" class="btn btn-icon" title="Putar / Jeda">▶</button>
+            <button id="btn-stop" class="btn btn-icon" title="Stop">■</button>
+            <button id="btn-play-selection" class="btn btn-secondary" title="Putar hanya bagian terpilih">▶ Pilihan</button>
+          </div>
+
+          <div class="volume">
+            <label for="volume">Volume</label>
+            <input id="volume" type="range" min="0" max="100" value="80" />
+          </div>
+
+          <button id="btn-export" class="btn btn-accent">Export MP3</button>
+        </div>
+
+        <p class="hint">Isi menit/detik lalu klik <strong>Apply</strong> — limiter kiri & kanan langsung menyesuaikan. Geser garis merah untuk koreksi manual.</p>
+      </div>
+    </main>
+
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <script type="module" src="renderer.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+{
+  "name": "mp3-cutter",
+  "version": "1.0.0",
+  "description": "Desktop MP3 cutter with player and draggable trim handles",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "build": "electron-builder --win",
+    "build:portable": "electron-builder --win portable",
+    "register-menu": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/register-context-menu.ps1",
+    "unregister-menu": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/unregister-context-menu.ps1"
+  },
+  "keywords": ["mp3", "cutter", "trim", "electron"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.3.3",
+    "electron-builder": "^24.13.3"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.2.0",
+    "fluent-ffmpeg": "^2.1.3",
+    "wavesurfer.js": "^7.9.4"
+  },
+  "build": {
+    "appId": "com.mp3cutter.app",
+    "productName": "MP3 Cutter",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "node_modules/ffmpeg-static/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "build/icon.png",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "MP3 Cutter"
+    },
+    "portable": {
+      "artifactName": "MP3-Cutter-Portable.exe"
+    }
+  }
+}
